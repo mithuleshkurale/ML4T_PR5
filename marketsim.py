@@ -1,5 +1,5 @@
 """"""
-import math
+
 
 """MC2-P1: Market simulator.  		  	   		  	  			  		 			 	 	 		 		 	 		 		 	 		  	 	 			  	 
 
@@ -30,7 +30,7 @@ GT ID: 903081123
 
 import datetime as dt
 import os
-
+import math
 import numpy as np
 
 import pandas as pd
@@ -108,9 +108,7 @@ def populateTradesDataFrame(orders, pricesDF, commission, impact, symbols):
     col_names.extend(symbols)
     tradesDataFrame = pd.DataFrame(np.zeros((len(orders), len(col_names))), columns=col_names)
 
-    # orders.copy(deep=True)
-
-    # tradesDataFrame.loc[:, "Symbol"] = 0
+    
     tradesDataFrame["Cash"] = 0
 
     for i in range(len(orders)):
@@ -136,7 +134,7 @@ def populateTradesDataFrame(orders, pricesDF, commission, impact, symbols):
         tradesDataFrame.loc[i, symbol] = shares
         tradesDataFrame.loc[i, "Date"] = date
         tradesDataFrame.loc[i, "Cash"] = currCashEarnings
-        # tradesDataFrame.loc[len(tradesDataFrame)] = [date, symbol, shares, currCashEarnings]
+        
     return tradesDataFrame
 
 
