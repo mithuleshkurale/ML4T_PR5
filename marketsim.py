@@ -1,5 +1,5 @@
 """"""
-
+import math
 
 """MC2-P1: Market simulator.  		  	   		  	  			  		 			 	 	 		 		 	 		 		 	 		  	 	 			  	 
 
@@ -30,7 +30,7 @@ GT ID: 903081123
 
 import datetime as dt
 import os
-import math
+
 import numpy as np
 
 import pandas as pd
@@ -106,9 +106,11 @@ def computePortVals(pricesDF, holdingsDF):
 def populateTradesDataFrame(orders, pricesDF, commission, impact, symbols):
     col_names = ["Date", "Cash"]
     col_names.extend(symbols)
-    tradesDataFrame = pd.DataFrame(np.zeros((len(orders), len(col_names))), columns=col_names)
+    tradesDataFrame = pd.DataFrame(np.zeros((len(pricesDF), len(col_names))), columns=col_names)
+    tradesDataFrame['Date'] = pricesDF.index
+    # orders.copy(deep=True)
 
-    
+    # tradesDataFrame.loc[:, "Symbol"] = 0
     tradesDataFrame["Cash"] = 0
 
     for i in range(len(orders)):
@@ -131,10 +133,9 @@ def populateTradesDataFrame(orders, pricesDF, commission, impact, symbols):
             shares = shares * -1
         else:
             raise Exception("Unidentifiable order type")
-        tradesDataFrame.loc[i, symbol] = shares
-        tradesDataFrame.loc[i, "Date"] = date
-        tradesDataFrame.loc[i, "Cash"] = currCashEarnings
-        
+        tradesDataFrame.loc[tradesDataFrame['Date']==date, symbol] += shares
+        tradesDataFrame.loc[tradesDataFrame['Date'] == date, "Cash"] += currCashEarnings
+
     return tradesDataFrame
 
 
