@@ -88,13 +88,13 @@ def compute_portvals(
 def computePortVals(pricesDF, holdingsDF):
     symbols = holdingsDF.columns[1:-1]
     holdingsDF["PortVal"] = 0
-    stockPriceForDayT = {}
+   
     for i in range(len(holdingsDF)):
         # for each row in orders fetch the column data
         val = 0
         date = holdingsDF.loc[i, "Date"]
         cash = holdingsDF.loc[i, "Cash"]
-        stockPriceForDayT = {}
+       
         for sym in symbols:
             val = val + (pricesDF.loc[date, sym] * holdingsDF.loc[i, sym])
         val += cash
